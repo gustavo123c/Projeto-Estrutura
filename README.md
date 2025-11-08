@@ -51,12 +51,21 @@ text
 Informe o tamanho da tabela hash: 10
 
 Menu:
+
 1 - Cadastrar usuario
+
 2 - Login
+
 3 - Remover usuario
+
 4 - Mostrar tabela
+
 5 - Sair
+
 Opcao: 1
+
 Usuario: joao
+
 Senha: 123456
+
 Usuario cadastrado.

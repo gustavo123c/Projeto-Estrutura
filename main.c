@@ -3,7 +3,7 @@
 #include <string.h>
 #include "hash.h"
 
-// Ler texto sem o \n final
+
 void lerTexto(char *str, int tamanho) {
     fgets(str, tamanho, stdin);
     int len = strlen(str);
@@ -15,7 +15,7 @@ int main() {
     int tamanho;
     printf("Informe o tamanho da tabela hash: ");
     scanf("%d", &tamanho);
-    getchar(); // limpa o \n deixado pelo scanf
+    getchar(); 
 
     struct TabelaHash *tabela = criarTabela(tamanho);
     if (tabela == NULL) {

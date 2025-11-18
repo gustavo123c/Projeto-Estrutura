@@ -58,20 +58,31 @@ int buscar(struct TabelaHash *tabela, const char *usuario) {
 int inserir(struct TabelaHash *tabela, const char *usuario, const char *senha) {
     if (tabela == NULL || usuario == NULL || senha == NULL) return -1;
     if (buscar(tabela, usuario) != -1) return 0;
+    
     int chave = converterString(usuario);
     int senhaHash = converterString(senha);
     int pos = funcaoHash(chave, tabela->tamanho);
     int i, primeiraRemovida = -1;
+    
     for (i = 0; i < tabela->tamanho; i++) {
         int indice = (pos + i) % tabela->tamanho;
-        if (tabela->itens[indice].estado == 1) continue;
-        if (tabela->itens[indice].estado == 2 && primeiraRemovida == -1)
+        
+        if (tabela->itens[indice].estado == 1) {
+            continue;
+        }
+        
+        if (tabela->itens[indice].estado == 2 && primeiraRemovida == -1) {
             primeiraRemovida = indice;
+        }
+        
         if (tabela->itens[indice].estado == 0) {
-            if (primeiraRemovida != -1)
+            if (primeiraRemovida != -1) {
                 indice = primeiraRemovida;
+            }
+            
             tabela->itens[indice].usuario = malloc(strlen(usuario) + 1);
             if (tabela->itens[indice].usuario == NULL) return -1;
+            
             strcpy(tabela->itens[indice].usuario, usuario);
             tabela->itens[indice].senha_hash = senhaHash;
             tabela->itens[indice].estado = 1;
@@ -79,6 +90,18 @@ int inserir(struct TabelaHash *tabela, const char *usuario, const char *senha) {
             return 1;
         }
     }
+    
+    if (primeiraRemovida != -1) {
+        tabela->itens[primeiraRemovida].usuario = malloc(strlen(usuario) + 1);
+        if (tabela->itens[primeiraRemovida].usuario == NULL) return -1;
+        
+        strcpy(tabela->itens[primeiraRemovida].usuario, usuario);
+        tabela->itens[primeiraRemovida].senha_hash = senhaHash;
+        tabela->itens[primeiraRemovida].estado = 1;
+        tabela->quantidade++;
+        return 1;
+    }
+    
     return -1;
 }
 
@@ -136,3 +159,4 @@ void liberar(struct TabelaHash *tabela) {
     free(tabela->itens);
     free(tabela);
 }
+
